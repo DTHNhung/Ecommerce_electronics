@@ -1,0 +1,23 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/jquery.dcjqaccordion.2.7.js": "/js/jquery.dcjqaccordion.2.7.js",
+    "/js/jquery.nicescroll.js": "/js/jquery.nicescroll.js",
+    "/js/scripts.js": "/js/scripts.js",
+    "/js/notification_order_status.js": "/js/notification_order_status.js",
+    "/css/style-tailwind.css": "/css/style-tailwind.css",
+    "/css/style.css": "/css/style.css",
+    "/css/style-responsive.css": "/css/style-responsive.css",
+    "/css/app.css": "/css/app.css",
+    "/css/style-app-user.css": "/css/style-app-user.css",
+    "/css/style-custom.css": "/css/style-custom.css",
+    "/js/cart_update.js": "/js/cart_update.js",
+    "/js/voucher.js": "/js/voucher.js",
+    "/js/style.js": "/js/style.js",
+    "/js/style_ajax.js": "/js/style_ajax.js",
+    "/js/customer_voucher.js": "/js/customer_voucher.js",
+    "/js/search.js": "/js/search.js",
+    "/i18n/en.json": "/i18n/en.json",
+    "/i18n/vi.json": "/i18n/vi.json",
+    "/js/statistic_order.js": "/js/statistic_order.js",
+    "/js/statistic_revenue.js": "/js/statistic_revenue.js"
+}
