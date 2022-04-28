@@ -1,0 +1,14 @@
+{
+  "name": "laravel-echo",
+  "homepage": "https://github.com/laravel/echo",
+  "version": "1.11.7",
+  "_release": "1.11.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.11.7",
+    "commit": "0259e4bc03dd8a4d0303ea88dec728a2a7321b31"
+  },
+  "_source": "https://github.com/laravel/echo.git",
+  "_target": "^1.11.4",
+  "_originalSource": "laravel-echo"
+}
