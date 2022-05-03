@@ -26,6 +26,8 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Voucher\VoucherRepositoryInterface;
 use App\Repositories\OrderProduct\OrderProductRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Repositories\Comment\CommentRepository;
 use App\Repositories\Shipping\ShippingRepositoryInterface;
 use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
 use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
@@ -82,6 +84,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             OrderStatusRepositoryInterface::class,
             OrderStatusRepository::class
+        );
+        $this->app->singleton(
+            CommentRepositoryInterface::class,
+            CommentRepository::class
         );
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);

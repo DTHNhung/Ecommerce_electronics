@@ -48,14 +48,13 @@
             </h2>
             <div class="flex items-center mb-6">
                 <div class="flex gap-1 text-sm text-yellow-400">
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
+                    <input type="hidden" id="prd-rate" value="{{ $product->avg_rating }}">
+                    <div id="rateYoP" class="pb-1"></div>
                 </div>
                 <div class="text-xs text-gray-500 ml-3">
-                    (150 {{ __('titles.Reviews') }})
+                    <a href="#comments" class="text-decoration-none">
+                        {{ (number_format($product->avg_rating, 1, '.', ',') . ' ' . __('titles.Reviews')) }}
+                    </a>
                 </div>
             </div>
             <div class="space-y-4">
@@ -167,5 +166,122 @@
         </div>
         <!-- details content end -->
     </div>
+    <!-- review comment and rating -->
+    
+    <div class="container pb-16 mx-auto mt-20">
+        @php
+            $count = 0;
+            foreach($product->comments as $comment) {
+                $count++;
+            }
+        @endphp
+        <h3 id="comments"
+            class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium text-xl uppercase">
+            {{ __('titles.comments') }} ({{ $count }})
+        </h3>
+        @if ($count == 0)
+            <p class="italic mt-5">{{ __('messages.no-comment') }}</p>
+        @endif
+        @foreach ($product->comments as $comment)
+            <div class="row mt-5">
+                <div class="text-black antialiased flex">
+                    @if ($comment->user->avatar != null)
+                        <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('avatars/' . $user->avatar ) }}" alt="">
+                    @else
+                        <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('images/user.png') }}" alt="">
+                    @endif
+                    <div class="w-80">
+                        <div class="bg-gray-100 rounded-lg px-5 py-2">
+                            <b>{{ $comment->user->name }}</b>   
+                            <div class="rating my-2">
+                                <p class="inline-block text-sm"> {{ $comment->content }}</p>
+                                <div class="flex float-right">
+                                    @php $rating = $comment->rating; @endphp
+                                    @foreach (range(1, 5) as $i)
+                                        @if ($rating > 0)
+                                            @if ($rating > 0.5)
+                                                <span class="fa-solid fa-star checked"></span>
+                                            @else
+                                                <span class="fa-solid fa-star-half-stroke checked"></span>
+                                            @endif
+                                        @else
+                                            <span class="fa-regular fa-star checked"></span>
+                                        @endif
+                                        @php $rating--; @endphp
+                                    @endforeach
+                                </div>
+                            </div>
+                            @if (Auth::check())
+                                @if ($comment->user_id == Auth::user()->id)
+                                    <form class="ms-5" action="{{ route('comment.destroy', $comment->id) }}" method="POST">
+                                        <small><button type="button" class="focus:outline-none focus:shadow-none hover:text-blue-400" id="btn-edit-cmt">{{ __('titles.edit') }}</button></small>
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="id" value="{{ $comment->id }}">
+                                        <input type="hidden" name="product_slug" value="{{ $product->slug }}">
+                                        <small class="px-1">|</small>
+                                        <small><button type="submit" id="btn-del" class="btn-delete focus:outline-none focus:shadow-none hover:text-blue-400" data-confirm="{{ __('messages.delete-confirm') }}">{{ __('titles.delete') }}</button></small>
+                                    </form>
+                                    <form method="POST" id="form-edit-cmt" class="visually-hidden" action="{{ route('comment.update', $comment->id) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $comment->id }}">
+                                        <input type="hidden" name="product_slug" value="{{ $product->slug }}">
+                                        <div class="relative flex mt-2">
+                                            <input type="text" name="content" 
+                                                class="bg-white w-full py-2 pl-4 pr-10 text-sm border border-transparent appearance-none rounded-tg placeholder-gray-500"
+                                                style="border-radius: 25px"
+                                                value="{{ $comment->content }}">
+                                            <button type="submit" id="btn-comment" class="absolute inset-y-0 right-0 flex items-center py-2 pr-4 focus:outline-none focus:shadow-none hover:text-blue-400">
+                                                <svg class="ml-1" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                            </button>
+                                        </div>
+                                        
+                                    </form>
+                                    @error('content')
+                                        <div class="text-red-500 italic">{{ $message }}</div>
+                                    @enderror
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        
+        @if ($allowComment)
+            <div class="row mt-5">
+                <div class="text-black antialiased flex">
+                    @if (Auth::user()->avatar != null)
+                        <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('avatars/' . $user->avatar ) }}" alt="">
+                    @else
+                        <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('images/user.png') }}" alt="">
+                    @endif
+                    <div class="w-80">
+                        <div class="bg-gray-100 rounded-lg px-5 py-2">
+                            <b class="text-sm">{{ Auth::user()->name }}</b>
+                            <form action="{{ route('comment', $product->slug) }}" id="form-cmt" method="POST" role="form">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                <input type="hidden" name="rating" id="rating" value="" />
+                                <div class="my-2" id="rateYo"></div>
+                                <div class="flex">
+                                    <input type="text" name="content" class="bg-white w-full py-2 px-4 text-sm border border-transparent appearance-none rounded-tg placeholder-gray-500" style="border-radius: 25px" placeholder="{{ __('messages.enter-comment') }}">
+                                    <button type="submit" id="btn-comment" class="flex items-center py-2 px-4 ml-1 rounded-lg text-sm bg-blue-600 text-white shadow-lg">{{ __('titles.post-comment') }}
+                                        <svg class="ml-1" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                    </button>
+                                </div>
+                                @error('content')
+                                    <div class="text-red-500 italic">{{ $message }}</div>
+                                @enderror
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
+    <!-- review comment and rating end-->
     <!-- product details and review end -->
 @endsection
