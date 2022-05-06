@@ -18,8 +18,6 @@
         charset="utf-8"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('bower_components/rateyo/min/jquery.rateyo.min.css') }}"
-        rel="stylesheet">
     <link href="{{ asset('bower_components/font-awesome/css/all.css') }}"
         rel="stylesheet">
     <link href="{{ asset('bower_components/toastr/toastr.css') }}"
@@ -56,7 +54,6 @@
                 <div>
                     <img src="{{ asset('images/methods.png') }}"
                         class="h-5">
-                    
                 </div>
             </div>
         </div>
@@ -75,20 +72,9 @@
     <script src="{{ asset('bower_components/pusher-js/dist/web/pusher.js') }}">
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('bower_components/rateyo/min/jquery.rateyo.min.js') }}"></script>
-    <script src="{{ asset('js/review.js') }}"></script>
-    @if (Auth::check())
-        <script src="{{ asset('js/notification_order_status.js') }}"></script> -->
-    @endif
-    <script>
-        $(document).ready(function() {
-            toastr.options.timeOut = 3000;
-            @if(Session::has('message-cmt'))
-                toastr.success('{{ Session::get("message-cmt") }}');
-            @endif
-        });
-
+    <script script src="{{ asset('js/notification_order_status.js') }}">
     </script>
+
 </body>
 
 </html>

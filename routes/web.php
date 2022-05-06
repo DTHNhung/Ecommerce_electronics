@@ -16,7 +16,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\Auth\ChangePasswordController;
-use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,9 +57,6 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('/voucher-wallet', [VoucherController::class, 'walletVoucher'])->name('user.voucher.wallet');
     Route::get('/use-voucher/{code}', [VoucherController::class, 'useVoucher'])->name('user.use.voucher');
     Route::get('/show-voucher', [VoucherController::class, 'showVoucher'])->name('user.show.voucher');
-    Route::post('/comment/{slug}', [CommentController::class, 'comment'])->name('comment');
-    Route::put('/comment/update/{id}', [CommentController::class, 'update'])->name('comment.update');
-    Route::delete('/comment/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {

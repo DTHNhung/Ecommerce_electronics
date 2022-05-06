@@ -236,7 +236,4 @@ return [
     'week_3' => 'Week 3',
     'week_4' => 'Week 4',
     'notifications' => 'Notifications',
-    'comments' => 'Comments',
-    'comment' => 'comment',
-    'post-comment' => 'Post',
 ];

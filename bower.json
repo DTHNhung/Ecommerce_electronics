@@ -27,7 +27,6 @@
     "bootstrap-multiselect": "0.9.16",
     "chart.js": "chartjs#v2.9.4",
     "pusher-js": "pusher#^7.0.6",
-    "laravel-echo": "^1.11.4",
-    "rateyo": "^2.3.4"
+    "laravel-echo": "^1.11.4"
   }
 }
