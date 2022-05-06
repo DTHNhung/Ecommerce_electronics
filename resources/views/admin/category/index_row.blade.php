@@ -1,8 +1,5 @@
 <tr>
     <td>
-        {{ $key + 1 }}
-    </td>
-    <td>
         {{ $prefix ?? '' }} {{ $category->name ?? '' }}
     </td>
     <td>
@@ -15,20 +12,17 @@
         @endif
     </td>
     <td>
-        {{ $category->slug ?? '' }}
-    </td>
-    <td>
         <a href="{{ route('categories.edit', $category->id) }}"
-            class="active styling-edit" ui-toggle-class="">
-            <i class="fas fa-edit text-success text-active"></i>
+            class="btn btn-sm" ui-toggle-class="">
+            <i class='fa-solid fa-pen-to-square text-success'></i>
         </a>
         <form action="{{ route('categories.destroy', $category->id) }}"
             method="POST">
             @csrf
             @method('DELETE')
-            <button id="#del" type="submit" class="delete-icon"
+            <button id="#del" type="submit" class="btn btn-sm"
                 onclick="ConfirmDelete('{{ __('messages.confirmDelete', ['name' => __('titles.category')]) }}')">
-                <i class="fa fa-times text-danger text"></i>
+                <i class='fa-solid fa-trash text-danger'></i>
             </button>
         </form>
     </td>

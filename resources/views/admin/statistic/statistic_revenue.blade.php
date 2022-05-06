@@ -1,10 +1,9 @@
 @extends('admin.admin_layout')
 @section('admin_content')
+    <h4 class="page-title">{{ __('titles.statistic_revenue') }}</h4>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ __('titles.statistic_revenue') }}
-                </div>
                 <div class="row">
                     <form method="post">
                         @csrf
