@@ -76,7 +76,7 @@
                 <div class="button-product rounded bg-white shadow-2xl overflow-hidden">
                     <div class="relative">
                         <img src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
-                            class="w-80 h-80">
+                            class="img-product">
                         <div class="product absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center gap-2 opacity-0 transition">
                             <a href="{{ route('show', $product->slug) }}"
                                 class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
@@ -91,7 +91,7 @@
                     <div class="pt-4 pb-3 px-4">
                         <a href="{{ route('show', $product->slug) }}">
                             <h4
-                                class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-indigo-900 transition">
+                                class="h-14 uppercase font-medium text-xl mb-2 text-gray-800 hover:text-indigo-900 transition">
                                 {{ $product->name }}
                             </h4>
                         </a>
@@ -104,14 +104,22 @@
                             </p>
                         </div>
                         <div class="flex items-center">
-                            <div class="flex gap-1 text-sm text-yellow-400">
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
-                                <span><i class="fas fa-star"></i></span>
+                            <div class="flex gap-1">
+                                @php $rating = $product->avg_rating; @endphp
+                                @foreach (range(1, 5) as $i)
+                                    @if ($rating > 0)
+                                        @if ($rating > 0.5)
+                                            <small class="fa-solid fa-star checked"></small>
+                                        @else
+                                            <small class="fa-solid fa-star-half-stroke checked"></small>
+                                        @endif
+                                    @else
+                                        <small class="fa-regular fa-star checked"></small>
+                                    @endif
+                                    @php $rating--; @endphp
+                                @endforeach
                             </div>
-                            <div class="text-xs text-gray-500 ml-3">(150)</div>
+                            <div class="text-xs text-gray-500 ml-3">({{ number_format($product->avg_rating, 1, '.', ',') }})</div>
                         </div>
                     </div>
                     <a href="#"

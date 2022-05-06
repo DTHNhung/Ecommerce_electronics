@@ -237,4 +237,7 @@ return [
     'week_3' => 'Tuần 3',
     'week_4' => 'Tuần 4',
     'notifications' => 'Thông báo',
+    'comment' => 'Bình luận',
+    'comments' => 'Bình luận',
+    'post-comment' => 'Gửi',
 ];
