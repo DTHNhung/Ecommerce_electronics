@@ -69,3 +69,22 @@ input[type=number] {
 .bg-head{
     background-image: url(../images/bg-home.jpg);
 }
+
+.w-80 {
+    width: 80%;
+}
+
+.visually-hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.checked {
+    color: orange;
+}
+
+.img-product {
+    overflow: hidden;
+    height: 300px;
+    object-fit: cover;
+}
