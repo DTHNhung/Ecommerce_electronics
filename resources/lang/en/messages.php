@@ -53,4 +53,7 @@ return [
     'order_canceled_at' => 'The order was canceled at ',
     'load_data_success' => 'Load data successfully',
     'no_data' => 'No data',
+    'no-comment' => 'No comment',
+    'enter-comment' => "Enter your comment...",
+    'delete-confirm' => "Are you sure you want to delete?",
 ];
