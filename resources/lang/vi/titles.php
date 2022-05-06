@@ -26,6 +26,7 @@ return [
     'brand' => 'Thương hiệu',
     'product' => 'Sản phẩm',
     'category' => 'Danh mục',
+    'add-category' => 'Thêm danh mục',
     'slug' => 'Slug',
     'add-brand' => 'Thêm thương hiệu',
     'all-brand' => 'Thương hiệu',

@@ -44,6 +44,7 @@ return [
     'All categories' => 'All categories',
     'Cart' => 'Cart',
     'Category' => 'Category',
+    'add-category' => 'Add Category',
     'Menu' => 'Menu',
     'Manage account' => 'Manage account',
     'Profile information' => 'Profile information',

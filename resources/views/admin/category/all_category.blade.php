@@ -1,75 +1,67 @@
 @extends('admin.admin_layout')
 @section('admin_content')
-    <div class="table-agile-info">
-        <a href="{{ route('categories.create') }}" class="btn btn-danger"
-            role="button">{{ __('titles.add-var', ['name' => __('titles.category')]) }}</a>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{ __('titles.all-var', ['name' => __('titles.category')]) }}
-            </div>
-            <div class="table-responsive">
+<h4 class="page-title">{{ __('titles.category') }}</h4>
+<div class="panel panel-default">
+    <a  href="{{ route('categories.create') }}"
+        class="btn-add">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span>{{ __('titles.add-category') }}</span>
+    </a>
+    <div class="table-responsive">
+        @php
+            $mess = Session::get('mess');
+        @endphp
+        @if ($mess)
+            <span class="text-alert">{{ $mess }}
+            </span>
+            <br><br>
+            @php
+                Session::put('mess', null);
+            @endphp
+        @endif
+        <table class="table table-hover mt-10" id="categories_table">
+            <thead>
+                <tr>
+                    <th>{{ __('titles.name-var', ['name' => __('titles.category')]) }}
+                    </th>
+                    <th>{{ __('titles.parent-category') }}</th>
+                    <th class="width-css"></th>
+                </tr>
+            </thead>
+            <tbody>
                 @php
-                    $mess = Session::get('mess');
+                    $index = 0;
                 @endphp
-                @if ($mess)
-                    <span class="text-alert">{{ $mess }}
-                    </span>
-                    <br><br>
-                    @php
-                        Session::put('mess', null);
-                    @endphp
-                @endif
-                <table class="table table-striped b-t b-light" id="categories_table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>{{ __('titles.name-var', ['name' => __('titles.category')]) }}
-                            </th>
-                            <th>{{ __('titles.parent-category') }}</th>
-                            <th>{{ __('titles.slug') }}</th>
-                            <th class="width-css"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($allCategory as $key => $category)
+                @foreach ($allCategory as $key => $category)
+                    @include(
+                        'admin.category.index_row',
+                        compact('category', 'index')
+                    )
+
+                    @foreach ($category->childCategories as $childCategory)
+                        @include(
+                            'admin.category.index_row',
+                            [
+                                'category' => $childCategory,
+                                'prefix' => '-----',
+                            ]
+                        )
+
+                        @foreach ($childCategory->childCategories as $childCategory)
                             @include(
                                 'admin.category.index_row',
-                                compact('category', 'key')
+                                [
+                                    'category' => $childCategory,
+                                    'prefix' => '-----------',
+                                ]
                             )
-
-                            @foreach ($category->childCategories as $childCategory)
-                                @include(
-                                    'admin.category.index_row',
-                                    [
-                                        'category' => $childCategory,
-                                        'prefix' => '-----',
-                                    ]
-                                )
-
-                                @foreach ($childCategory->childCategories as $childCategory)
-                                    @include(
-                                        'admin.category.index_row',
-                                        [
-                                            'category' => $childCategory,
-                                            'prefix' => '-----------',
-                                        ]
-                                    )
-                                @endforeach
-                            @endforeach
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-sm-5 text-center">
-                    </div>
-                    <div class="col-sm-7 text-right text-center-xs">
-                    </div>
-                </div>
-            </footer>
-        </div>
+                    @endforeach
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 @endsection
 @section('dataTable')
     <script>
