@@ -22,10 +22,6 @@ class Product extends Model
         'image_thumbnail',
     ];
 
-    protected $appends = [
-        'avg_rating',
-    ];
-
     public function images()
     {
         return $this->hasMany(Image::class);
@@ -45,15 +41,5 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_products', 'product_id', 'order_id');
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function getAvgRatingAttribute()
-    {
-        return $this->comments->avg('rating');
     }
 }

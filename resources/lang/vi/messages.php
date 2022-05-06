@@ -55,7 +55,4 @@ return [
     'order_canceled_at' => 'Đơn hàng đã bị hủy vào lúc ',
     'load_data_success' => 'Tải dữ liêu thành công',
     'no_data' => 'Không có dữ liệu',
-    'no-comment' => 'Không có bình luận',
-    'enter-comment' => 'Nhập bình luận của bạn...',
-    'delete-confirm' => 'Bạn có chắc chắn muốn xóa?',
 ];

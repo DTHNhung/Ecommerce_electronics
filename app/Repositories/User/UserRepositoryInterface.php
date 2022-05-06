@@ -18,6 +18,4 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function sendNotify($id, $event);
 
     public function findByAttributes($attributes = []);
-
-    public function getUserByOrderConfirmed($id);
 }

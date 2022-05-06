@@ -48,7 +48,6 @@ mix.postCss("resources/css/style-custom.css", "css/style-custom.css").options({
 mix.js("resources/js/jquery.dcjqaccordion.2.7.js", "public/js")
     .js("resources/js/jquery.nicescroll.js", "public/js")
     .js("resources/js/scripts.js", "public/js")
-    .js("resources/js/review.js", "public/js")
     .copy("resources/js/cart_update.js", "public/js/cart_update.js")
     .copy("resources/js/voucher.js", "public/js/voucher.js")
     .copy("resources/js/style.js", "public/js/style.js")
