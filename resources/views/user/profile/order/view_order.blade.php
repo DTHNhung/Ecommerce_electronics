@@ -77,7 +77,7 @@
                                                 </div>
                                                 <div class="ml-4">
                                                     <div
-                                                        class="text-sm font-medium text-gray-900">
+                                                        class="text-sm font-mono uppercase font-semibold text-gray-900">
                                                         {{ $product->name }}
                                                     </div>
                                                 </div>

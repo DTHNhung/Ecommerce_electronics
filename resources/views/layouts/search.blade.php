@@ -5,7 +5,7 @@
             <img src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
                 class="w-13 h-13 rounded-full" alt="">
             <div class="ml-5 h-11">
-                <span class="block font-medium text-lg">
+                <span class="block font-mono uppercase font-semibold text-lg">
                     {{ $product->name }}
                 </span>
                 <span class="block text-xs"><br /></span>

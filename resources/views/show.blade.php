@@ -16,26 +16,26 @@
         <span class="text-sm text-gray-400">
             <i class="fas fa-chevron-right"></i>
         </span>
-        <p class="text-gray-600 font-medium uppercase">
+        <p class="text-gray-600 font-mono font-semibold uppercase">
             {{ $product->name }}
         </p>
     </div>
     <!-- breadcrum end -->
 
     <!-- product view -->
-    <div class="container pt-4 pb-6 grid lg:grid-cols-2 gap-6 m-auto">
+    <div class=" bg-white shadow rounded px-8 mt-6 container pt-4 pb-6 grid lg:grid-cols-2 gap-6 m-auto">
         <!-- product image -->
         <div>
             <div>
                 <img id="main-img"
                     src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
-                    class="w-full">
+                    class=" w-2/3 h-2/3 mx-auto">
             </div>
             <div class="grid grid-cols-5 gap-4 mt-4">
                 @foreach ($product->images as $image)
                     <div>
                         <img src="{{ asset('images/uploads/products/' . $image->image) }}"
-                            class="single-img w-28 h-28 cursor-pointer border border-indigo-900">
+                            class="single-img w-20 h-20 cursor-pointer border border-indigo-900">
                     </div>
                 @endforeach
             </div>
@@ -43,7 +43,7 @@
         <!-- product image end -->
         <!-- product content -->
         <div class="ml-6">
-            <h2 class="md:text-3xl text-2xl font-medium uppercase mb-4">
+            <h2 class="md:text-3xl text-2xl font-mono font-medium uppercase mb-4 mt-5">
                 {{ $product->name }}
             </h2>
             <div class="flex items-center mb-6">
@@ -57,7 +57,7 @@
                     </a>
                 </div>
             </div>
-            <div class="space-y-4">
+            <div class="space-y-4 mb-3">
                 <p class="space-x-2">
                     <span class="text-gray-800 font-semibold">
                         {{ __('titles.Brand') }}:
@@ -67,7 +67,19 @@
                     </span>
                 </p>
             </div>
-            <div class="mt-20 flex items-baseline gap-5 bg-gray-50 py-8 pl-5">
+            <div class="space-y-4">
+                <p class="space-x-2">
+                    <span class="text-gray-800 font-semibold">
+                        {{ __('titles.Category') }}:
+                    </span>
+                    <span class="text-gray-600">
+                        @foreach ($product->category as $category)
+                            {{ $category->name }} |
+                        @endforeach
+                    </span>
+                </p>
+            </div>
+            <div class="mt-10 flex items-baseline gap-5 bg-gray-50 py-8 pl-5">
                 <span class="text-indigo-900 font-semibold text-3xl">
                     {{ vndFormat($product->price) }}
                     <input type="hidden" name="_token"
@@ -91,7 +103,7 @@
                         onclick="stepper('increment_{{ $product->id }}')"
                         class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">+</button>
                 </div>
-                <div class="text-gray-400 ml-32 pt-2">
+                <div class="text-gray-400 ml-36 pt-2">
                     {{ $product->quantity . __('titles.piece available') }}
                 </div>
             </div>
@@ -148,7 +160,7 @@
     <!-- product view end -->
 
     <!-- product details and review -->
-    <div class="container pb-16 mx-auto mt-20">
+    <div class=" bg-white shadow rounded px-8 pt-5 container pb-16 mx-auto mt-5">
         <!-- detail buttons -->
         <h3
             class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium text-xl uppercase">
@@ -158,24 +170,24 @@
 
         <!-- details content -->
         <div class="lg:w-4/5 xl:w-3/5 pt-8">
-            <div class="space-y-5 text-gray-600 text-lg">
-                <p class="leading-6">
+            <div class="space-y-5 text-gray-600 text-lg font-serif">
+                <fieldset class=" leading-8 tracking-normal">
                     {!! $product->description !!}
-                </p>
+                </fieldset>
             </div>
         </div>
         <!-- details content end -->
     </div>
     <!-- review comment and rating -->
     
-    <div class="container pb-16 mx-auto mt-20">
+    <div id="comments" class=" bg-white shadow rounded px-8 pt-5 container pb-16 mx-auto my-5">
         @php
             $count = 0;
             foreach($product->comments as $comment) {
                 $count++;
             }
         @endphp
-        <h3 id="comments"
+        <h3 
             class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium text-xl uppercase">
             {{ __('titles.comments') }} ({{ $count }})
         </h3>
@@ -284,4 +296,77 @@
     </div>
     <!-- review comment and rating end-->
     <!-- product details and review end -->
+
+    <div>
+
+    <div id="also_like" class="uppercase text-xl text-gray-600 pt-5 container pb-5 mx-auto">
+        <h3>
+            {{ __('titles.also-like') }}
+        </h3>
+    </div>
+    <!-- product wrapper -->
+    <div class="container grid lg:grid-cols-4 sm:grid-cols-2 gap-6 mx-auto mb-5">
+        @foreach ($pCategory->childCategories as $category)
+            @foreach ($category->products as $product)
+                <div class="button-product rounded bg-white shadow-2xl overflow-hidden">
+                    <div class="relative">
+                        <img src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
+                            class="img-product">
+                        <div class="product absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center gap-2 opacity-0 transition">
+                            <a href="{{ route('show', $product->slug) }}"
+                                class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
+                                <i class="fas fa-search"></i>
+                            </a>
+                            <a href="#"
+                                class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
+                                <i class="far fa-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pt-4 pb-3 px-4">
+                        <a href="{{ route('show', $product->slug) }}">
+                            <h4
+                                class="h-14 font-mono uppercase font-semibold text-lg mb-2 text-gray-800 hover:text-indigo-900 transition">
+                                {{ $product->name }}
+                            </h4>
+                        </a>
+                        <div class="flex items-baseline mb-1 space-x-2">
+                            <p
+                                class="text-lg text-indigo-900 font-roboto font-semibold">
+                                {{ vndFormat($product->price) }}
+                                <input type="hidden" name="_token"
+                                    value={{ csrf_token() }}>
+                            </p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex gap-1">
+                                @php $rating = $product->avg_rating; @endphp
+                                @foreach (range(1, 5) as $i)
+                                    @if ($rating > 0)
+                                        @if ($rating > 0.5)
+                                            <small class="fa-solid fa-star checked"></small>
+                                        @else
+                                            <small class="fa-solid fa-star-half-stroke checked"></small>
+                                        @endif
+                                    @else
+                                        <small class="fa-regular fa-star checked"></small>
+                                    @endif
+                                    @php $rating--; @endphp
+                                @endforeach
+                            </div>
+                            <div class="text-xs text-gray-500 ml-3">({{ number_format($product->avg_rating, 1, '.', ',') }})</div>
+                        </div>
+                    </div>
+                    <a href="#"
+                        data-url="{{ route('addToCart', ['id' => $product->id]) }}"
+                        class="block w-full py-1 text-center text-white bg-indigo-900 border border-indigo-900 rounded-b hover:bg-transparent hover:text-indigo-900 transition add_to_cart">
+                        {{ __('titles.Add to Cart') }}
+                    </a>
+                </div>
+            @endforeach
+        @endforeach
+    </div>
+</div>
+
+    <!-- product wrapper end -->
 @endsection

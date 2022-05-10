@@ -61,7 +61,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return $this->model
             ->where('slug', $slug)
-            ->with('brand')
+            ->with('brand', 'category')
             ->first();
     }
 
@@ -80,7 +80,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             return false;
         }
     }
-
 
     public function getProduct()
     {

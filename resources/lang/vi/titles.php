@@ -240,4 +240,9 @@ return [
     'comment' => 'Bình luận',
     'comments' => 'Bình luận',
     'post-comment' => 'Gửi',
+    'viewStatusOrder' => 'Trạng thái đơn hàng',
+    'viewDetailOrder' => 'Chi tiết đơn hàng',
+    'also-like' => 'co the ban cung thich',
+    'order_id' => 'Mã đơn hàng',
+    'total' => 'Tổng giá trị',
 ];

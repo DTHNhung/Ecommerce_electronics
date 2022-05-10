@@ -119,7 +119,7 @@
                         <div class="pt-4 pb-3 px-4">
                             <a href="{{ route('show', $product->slug) }}">
                                 <h4
-                                    class="h-14 uppercase font-medium text-xl mb-2 text-gray-800 hover:text-indigo-900 transition">
+                                    class="h-14 font-mono uppercase font-semibold text-lg mb-2 text-gray-800 hover:text-indigo-900 transition">
                                     {{ $product->name }}
                                 </h4>
                             </a>
