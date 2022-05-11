@@ -29,7 +29,7 @@
     <link href="{{ asset('css/style-custom.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-white h-screen antialiased leading-none font-sans">
+<body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     <div id="app">
         <div class="header sticky top-0 z-50">
             <!-- header -->

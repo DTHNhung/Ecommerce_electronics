@@ -239,4 +239,9 @@ return [
     'comments' => 'Comments',
     'comment' => 'comment',
     'post-comment' => 'Post',
+    'viewStatusOrder' => 'Status Order',
+    'viewDetailOrder' => 'Detail Order',
+    'also-like' => 'you may also like',
+    'order_id' => 'Order ID',
+    'total' => 'Total',
 ];
