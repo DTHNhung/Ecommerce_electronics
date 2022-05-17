@@ -6,6 +6,7 @@ use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Comment\CommentRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
@@ -31,11 +32,7 @@ class ShopController extends Controller
     {
         $brands = $this->brandRepo->getBrands();
         $products = $this->productRepo->getProduct();
-
-        return view('shop', [
-            'brands' => $brands,
-            'products' => $products,
-        ]);
+        return view('shop', compact('brands', 'products'));
     }
 
     public function show($slug)
@@ -67,5 +64,15 @@ class ShopController extends Controller
         }
 
         return view('show', compact('product', 'comments', 'allowComment', 'pCategory'));
+    }
+
+    public function filterByBrand(Request $request)
+    {
+        if ($request) {
+            $products = $this->productRepo->filterProduct(
+                $request->brand_name, $request->min_price, $request->max_price
+            );
+        }
+        return response()->json($products);
     }
 }

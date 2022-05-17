@@ -37,6 +37,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/search-product', [HomeController::class, 'search'])->name('search.product');
 Route::get('/search-list-products/{key}', [HomeController::class, 'searchList'])->name('search.list.products');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/shop/filter', [ShopController::class, 'filterByBrand'])->name('shop.filter');
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('show');
 Route::get(
     '/category/{category}/{childCategory:slug?}/{childCategory2?}',

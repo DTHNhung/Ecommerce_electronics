@@ -16,6 +16,7 @@
     <!-- shop wrapper -->
     <div class="container grid lg:grid-cols-4 gap-6 pt-4 pb-16 items-start relative m-auto">
         <!-- sidebar -->
+        <!-- <form action="{{ route('shop.filter') }}" method="get"> -->
         <div class="col-span-1 bg-white px-4 pt-4 pb-6 shadow-2xl rounded overflow-hidden absolute lg:static left-4 top-16 z-10 w-72 lg:w-full lg:block">
             <div class="divide-gray-200 divide-y space-y-5 relative">
                 <!-- brand filter -->
@@ -26,9 +27,9 @@
                         @if (isset($key))
                             @foreach ($brands as $name => $qualitity)
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="Dominik"
-                                        class="text-indigo-900 focus:ring-0 rounded-sm cursor-pointer">
-                                    <label for="Dominik"
+                                    <input type="checkbox" id="{{ $name }}" name="brand_name[]" value="{{ $id }}"
+                                        class="text-indigo-900 focus:ring-0 rounded-sm cursor-pointer brand-checkbox">
+                                    <label for="{{ $name }}"
                                         class="text-gray-600 ml-3 cursor-pointer hover:text-indigo-900 hover:font-medium">
                                         {{ $name }}
                                     </label>
@@ -40,9 +41,9 @@
                         @else
                             @foreach ($brands as $brand)
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="Dominik"
-                                        class="text-indigo-900 focus:ring-0 rounded-sm cursor-pointer hover:font-medium">
-                                    <label for="Dominik"
+                                    <input type="checkbox" id="{{ $brand->name }}" name="brand_name[]" value="{{ $brand->id }}"
+                                        class="text-indigo-900 focus:ring-0 rounded-sm cursor-pointer hover:font-medium brand-checkbox">
+                                    <label for="{{ $brand->name }}"
                                         class="text-gray-600 ml-3 cursor-pointer hover:text-indigo-900 hover:font-medium">
                                         {{ $brand->name }}
                                     </label>
@@ -56,22 +57,24 @@
                 </div>
                 <!-- brand filter end -->
                 <!-- price filter -->
-                <div class="pt-4 mx-3">
+                <div class="pt-4 mx-3 space-y-4">
                     <h3 class="text-xl text-gray-800 mb-5 uppercase font-medium">
                         {{ __('titles.Price') }}</h3>
                     <div class="mt-4 flex items-center">
-                        <input type="text"
+                        <input type="text" name="min_price" id="min_price"
                             class="w-full border-gray-300 border focus:border-opacity-0 focus:border-indigo-900 px-3 py-1 text-gray-600 text-sm shadow-2xl-sm rounded"
                             placeholder="{{ __('titles.min') }}">
                         <span class="mx-3 text-gray-500">-</span>
-                        <input type="text"
+                        <input type="text" name="max_price" id="max_price"
                             class="w-full border-gray-300 border focus:border-opacity-0 focus:border-indigo-900 px-3 py-1 text-gray-600 text-sm shadow-2xl-sm rounded"
                             placeholder="{{ __('titles.max') }}">
                     </div>
                 </div>
                 <!-- price filter end -->
+                <button type="button" id="btn-filter" class="mx-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Filter</button>
             </div>
         </div>
+        <!-- </form> -->
         <!-- sidebar end -->
         <!-- products -->
         <div class="col-span-3">
@@ -99,7 +102,8 @@
             </div>
             <!-- sorting end -->
             <!-- product wrapper -->
-            <div class="grid lg:grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 gap-6">
+            <div class="grid lg:grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 gap-6 filter-data">
+                @if ($products->count() > 0 )
                 @foreach ($products as $product)
                     <div class="button-product rounded bg-white shadow-2xl overflow-hidden">
                         <div class="relative">
@@ -157,6 +161,9 @@
                         </a>
                     </div>
                 @endforeach
+                @else
+               <h2>No Product Found.!</h2>
+               @endif
             </div>
             <!-- product wrapper end -->
         </div>
