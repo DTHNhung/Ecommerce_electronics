@@ -1,75 +1,83 @@
 @extends('user.profile.layouts.profile')
 @section('content-profile')
     <!-- account content -->
-    <div class="col-span-9 shadow-2xl rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
-        <h3
-            class="text-lg font-medium capitalize mb-12 mx-6 pt-3.5 pb-8 border border-l-0 border-t-0 border-r-0">
-            {{ __('titles.your-order') }}: {{ $orders->total() }}
-            {{ __('titles.order') }}
-        </h3>
+    <div class="col-span-9">
+        <div class="shadow-2xl rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
+            <h3
+                class="text-lg font-medium capitalize mb-3 mx-6 pt-3.5 pb-8">
+                {{ __('titles.your-order') }}: {{ $orders->total() }}
+                {{ __('titles.order') }}
+            </h3>
+        </div>
+    
         @foreach ($orders as $order)
-            <h1 class="font-bold">#{{ $order->code }}</h1>
-            <h1 class="font-normal my-2">{{ formatDate($order->created_at) }}</h1>
-            <div class="flex">
-                <a class="py-2 px-2 font-bold border-2 rounded border-black"
-                    href="{{ route('viewDetailOrder', ['id' => $order->id]) }}">{{ __('titles.view_order') }}</a>
-                <span
-                    class="bg-transparent text-blue-700 font-semibold 
-                    py-2 px-4 flex items-center justify-end flex-grow">
-                    @if ($order->orderStatus->id === config('app.unconfirmed'))
+        <div class="shadow-2xl rounded px-6 pt-5 pb-7 mt-6 bg-white">
+            <div
+                class="text-black mb-3 flex items-center justify-end flex-grow">
+                @if ($order->orderStatus->id === config('app.unconfirmed'))
+                    <span class=" bg-gray-100 p-2 rounded-full">
                         {{ __('messages.unconfirmed') }}
-                    @elseif($order->orderStatus->id === config('app.confirmed'))
-                        {{ __('messages.confirmed') }}
-                    @else
-                        {{ __('messages.canceled') }}
-                    @endif
-                </span>
+                    </span>
+                @elseif($order->orderStatus->id === config('app.confirmed'))
+                    <span class=" bg-gray-100 p-2 rounded-full">
+                        {{ __('messages.confirmed') }} 
+                    </span>
+                @else
+                    <span class=" bg-gray-100 p-2 rounded-full">
+                        {{ __('messages.canceled') }} 
+                    </span>
+                @endif
+                <span class=" text-gray-500 mx-2">|</span>
+                <span class="font-normal my-2 text-green-500">{{ formatDate($order->created_at) }}</span>
             </div>
-            <div class="mb-10">
+            <div class="">
                 @foreach ($order->products as $product)
-                    <a href="{{ route('show', ['product' => $product->slug]) }}">
-                        <div
-                            class="max-w-md mx-auto bg-white rounded-xl shadow-2xl-md overflow-hidden md:max-w-4xl bg-gray-100 ">
-                            <div class="md:flex">
-                                <div class="md:shrink-0">
-                                    <img class="h-48 w-full object-cover md:h-full md:w-48"
-                                        src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
-                                        alt="Man looking at item at a store">
+                <div class="max-w-md mx-auto bg-white shadow-2xl-md overflow-hidden md:max-w-4xl border border-l-0 border-b-0 border-r-0">
+                    <div class="flex mt-3">
+                        <a href="{{ route('show', ['product' => $product->slug]) }}">
+                            <img class=" h-28 w-full object-cover md:h-full md:w-28 border-gray-300 border"
+                                src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
+                                alt="Man looking at item at a store">
+                        </a>
+                        <a href="{{ route('viewDetailOrder', ['id' => $order->id]) }}">
+                            <div class="p-8 flex mt-4">
+                                <div
+                                    class="font-mono uppercase tracking-wide text-sm text-indigo-500 font-semibold w-72">
+                                    {{ $product->name }}
                                 </div>
-                                <div class="p-8">
-                                    <div
-                                        class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                                        {{ $product->name }}</div>
-                                    <a href="#"
-                                        class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">x{{ $product->pivot->product_sales_quantity }}</a>
-                                    <p class="mt-2 text-slate-500">
-                                        {{ vndFormat($product->price) }}</p>
+                                <div class="w-52 ml-10">
+                                    Qty: x{{ $product->pivot->product_sales_quantity }}
+                                </div>
+                                <div class=" text-red-400 font-medium">
+                                    {{ vndFormat($product->price) }}
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                </div>
                 @endforeach
                 <div class="row">
                     <div class="col-sm-5 text-center">
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
                         <h1
-                            class="uppercase tracking-wide text-lg text-indigo-500 font-semibold">
+                            class="uppercase tracking-wide text-lg text-indigo-900 font-semibold">
                             {{ __('titles.Total') }}:
                             {{ vndFormat($order->sum_price) }}</h1>
                     </div>
                 </div>
             </div>
-        @endforeach
-        <div class="row">
-            <div class="col-sm-5 text-center">
-            </div>
-            <div class="col-sm-7 text-right text-center-xs">
-                <ul class="pagination pagination-sm m-t-none m-b-none">
-                </ul>
-            </div>
         </div>
-        {{ $orders->links() }}
+        @endforeach
     </div>
+    <div class="row">
+        <div class="col-sm-5 text-center">
+        </div>
+        <div class="col-sm-7 text-right text-center-xs">
+            <ul class="pagination pagination-sm m-t-none m-b-none">
+            </ul>
+        </div>
+    </div>
+    {{ $orders->links() }}
     <!-- account content end -->
 @endsection

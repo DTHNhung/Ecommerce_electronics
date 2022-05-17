@@ -38,6 +38,12 @@ class ShopController extends Controller
     public function show($slug)
     {
         $product = $this->productRepo->findBySlug($slug);
+        $c = '';
+        foreach ($product->category as $category) {
+            $c =  $category;
+        }
+        //get product same category with $product
+        $pCategory = $category->parentCategory;
         $comments = $this->cmtRepo->getAll();
         $allowComment = false;
         if (Auth::check()) {
@@ -56,7 +62,8 @@ class ShopController extends Controller
                 }
             }
         }
-        return view('show', compact('product', 'comments', 'allowComment'));
+
+        return view('show', compact('product', 'comments', 'allowComment', 'pCategory'));
     }
 
     public function filterByBrand(Request $request)
