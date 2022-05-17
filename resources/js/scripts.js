@@ -1,3 +1,5 @@
+const { range } = require("lodash");
+
 (function ($) {
     "use strict";
     $(document).ready(function () {
@@ -288,3 +290,158 @@
 
 
 })(jQuery);
+
+$(document).ready(function() {
+    function number_format (number, decimals, dec_point, thousands_sep) {
+        // Strip all characters but numerical ones.
+        number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function (n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+    }
+
+    var brands = []
+    var range_price = []
+
+    window.onload = function() {
+        $('.brand-checkbox').prop('checked', false)
+    }
+
+    $('.brand-checkbox').click(function() {
+        var checked = $(this).attr('value')
+        if ($(this).is(':checked')) {
+            brands.push(checked)
+        } else {
+            // Remove the element if unchecked:
+            for (var i = 0; i < brands.length; i++) {
+                if (brands[i] == $(this).attr('value')) {
+                    brands.splice(i, 1);
+                }
+            }
+        }
+    })
+
+    $('#min_price').change(function() {
+        range_price.push($(this).val())
+    })
+
+    $('#max_price').change(function() {
+        range_price.push($(this).val())
+    })
+
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    $('#btn-filter').click(function() {
+        $('.filter-data').html('')
+        $.ajax({
+            url: '/shop/filter',
+            type: 'GET',
+            data: {
+                brand_name: brands,
+                min_price: range_price[0],
+                max_price: range_price[1],
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data.length == 0) {
+                    $('.filter-data').append('No data filter')
+                } else {
+                    data.forEach(element => {
+                        var url_show = window.location.protocol + '//' + window.location.host + '/shop/' + element.slug
+                        var url_cart = window.location.protocol + '//' + window.location.host + '/add-to-cart/' + element.id
+                        let rating = element.avg_rating
+                        let rating_dom = ``;
+                        let cart = ``;
+                        var locale = document.documentElement.lang ;
+                        if (locale == 'vi') {
+                            cart = `<a href="#"
+                                data-url="${url_cart}"
+                                class="block w-full py-1 text-center text-white bg-indigo-900 border border-indigo-900 rounded-b hover:bg-transparent hover:text-indigo-900 transition add_to_cart">
+                                Thêm vào giỏ hàng
+                            </a>`
+                        } else {
+                            cart = `<a href="#"
+                                data-url="${url_cart}"
+                                class="block w-full py-1 text-center text-white bg-indigo-900 border border-indigo-900 rounded-b hover:bg-transparent hover:text-indigo-900 transition add_to_cart">
+                                Add To Cart
+                            </a>`
+                        }
+                        for (let star = 1; star <= 5; star++) {
+                            if (rating > 0) {
+                                if(rating > 0.5) {
+                                    rating_dom += `<small class="fa-solid fa-star checked"></small>`;
+                                } else {
+                                    rating_dom += `<small class="fa-solid fa-star-half-stroke checked"></small>`;
+                                }
+                            } else {
+                                rating_dom += ` <small class="fa-regular fa-star checked"></small>`;
+                            }
+                            rating--
+                        }
+                        $('.filter-data').append(`
+                        <div class="button-product rounded bg-white shadow-2xl overflow-hidden">
+                        <div class="relative">
+                            <img src="` + window.location.protocol + '//' + window.location.host + '/images/uploads/products/' + element.image_thumbnail + `"
+                                class="img-product">
+                            <div class="product absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center gap-2 opacity-0 transition">
+                                <a href="${url_show}"
+                                    class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
+                                    <i class="fas fa-search"></i>
+                                </a>
+                                <a href="#"
+                                    class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="pt-4 pb-3 px-4">
+                            <a href="${url_show}">
+                                <h4
+                                    class="h-14 uppercase font-medium text-xl mb-2 text-gray-800 hover:text-indigo-900 transition">`
+                                    + element.name +
+                                `</h4>
+                            </a>
+                            <div class="flex items-baseline mb-1 space-x-2">
+                                <p
+                                    class="text-lg text-indigo-900 font-roboto font-semibold">`
+                                    + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(element.price) + 
+                                    `<input type="hidden" name="_token"
+                                        value="${$('meta[name="csrf-token"]').attr('content')}">
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex gap-1">`
+                                + rating_dom +
+                                `</div>
+                                <div class="text-xs text-gray-500 ml-3">( ` + number_format(element.avg_rating,1,'.',',')  + `)</div>
+                            </div>
+                        </div>`
+                        + cart + `
+                    </div>
+                    `)
+                    });
+                }
+            }
+        })
+    })
+})

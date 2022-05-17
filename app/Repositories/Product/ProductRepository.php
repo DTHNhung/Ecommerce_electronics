@@ -81,7 +81,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         }
     }
 
-
     public function getProduct()
     {
         return $this->model->select('*')->with('brand', 'category')->orderby('created_at', 'DESC')->get();
@@ -103,5 +102,18 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $product->save();
 
         return $product;
+    }
+
+    public function filterProduct($name, $min, $max)
+    {
+        $query = $this->model->with('brand', 'category')->orderby('created_at', 'DESC');
+        if (!is_null($name)) {
+            $query = $query->whereIn('brand_id', $name);
+        }
+        if (!is_null($min) && !is_null($max)) {
+            $query = $query->where('price','>=',$min);
+            $query = $query->where('price','<=',$max);
+        }
+        return $query->get();
     }
 }

@@ -31,4 +31,6 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function decrementSoldProduct($product_id, $quantity);
 
     public function incrementSoldProduct($product_id, $quantity);
+
+    public function filterProduct($name, $min, $max);
 }

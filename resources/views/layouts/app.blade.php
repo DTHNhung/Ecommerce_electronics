@@ -87,7 +87,6 @@
                 toastr.success('{{ Session::get("message-cmt") }}');
             @endif
         });
-
     </script>
 </body>
 
