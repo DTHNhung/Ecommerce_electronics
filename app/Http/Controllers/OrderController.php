@@ -59,19 +59,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = $this->orderRepo->getOrderNotInStatusCancel();
+        $orders = $this->orderRepo->getAll();
 
-        return view('admin.order.all_order')->with(compact('orders'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('admin.order.all_order', [
+            'orders' => $orders,
+        ]);
     }
 
     /**
@@ -124,9 +116,10 @@ class OrderController extends Controller
                     session()->forget('subTotal');
                     $orders->delete();
                     $shipping->delete();
-                    Session::flash('mess', __('messages.error'));
 
-                    return back();
+                    return back()->with([
+                        'mess', __('messages.error')
+                    ]);
                 }
             }
             $this->orderProductRepo->insertOrderProduct($order_product);
@@ -136,11 +129,11 @@ class OrderController extends Controller
             session()->forget('subTotal');
 
             return view('user.checkout.order_complete');
-        } else {
-            Session::flash('mess', __('messages.cart-empty'));
-
-            return back();
         }
+
+        return back()->with([
+            'mess', __('messages.cart-empty')
+        ]);
     }
 
     /**
@@ -180,43 +173,23 @@ class OrderController extends Controller
         $order_status_id = $request->order_status_id;
 
         if ($order->order_status_id != $order_status_id) {
-            if ($order_status_id == config('app.confirmed')) {
+            if ($order_status_id == config('app.processing')) {
                 foreach ($order->products as $key => $product) {
                     $product->pivot->product_sales_quantity;
                     $this->productRepo->decrementQuantityProduct($product->id, $product->pivot->product_sales_quantity);
                     $this->productRepo->incrementSoldProduct($product->id, $product->pivot->product_sales_quantity);
                 }
-            } elseif ($order_status_id != config('app.confirmed') && $order_status_id != config('app.canceled')) {
-                foreach ($order->products as $key => $product) {
-                    $this->productRepo->incrementQuantityProduct($product->id, $product->pivot->product_sales_quantity);
-                    $this->productRepo->decrementSoldProduct($product->id, $product->pivot->product_sales_quantity);
-                }
-            }
-            if ($order_status_id == config('app.canceled')) {
-                if ($order->voucher != null) {
-                    $this->voucherRepo->incrementVoucherWhenCancelOrder($order->voucher->id);
-                }
-            }
+            } 
+
             $order->update([
                 'order_status_id' => $request->order_status_id,
             ]);
             $eventNotify = new UpdateOrderStatus($order);
             $this->userRepo->sendNotify($order->user_id, $eventNotify);
-
-            $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.order')]));
         }
 
-        return redirect()->route('orders.index');
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('orders.index')
+            ->with('mess', __('messages.update-success', ['name' => __('titles.order')]));
     }
 
     public function infoCheckout()

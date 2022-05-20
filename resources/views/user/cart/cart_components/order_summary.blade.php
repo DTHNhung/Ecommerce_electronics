@@ -1,4 +1,4 @@
-<div class="xl:col-span-3 lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0 shadow-md" id="order-summary">
+<div class=" bg-white xl:col-span-3 lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0 shadow-md" id="order-summary">
     <!-- title -->
     <h4 class="text-gray-800 text-lg mb-6 font-medium uppercase">
         {{ __('titles.Order summary') }}

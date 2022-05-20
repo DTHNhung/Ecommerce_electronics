@@ -58,7 +58,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function getUserByOrderConfirmed($id)
     {
         return $this->model::with(['orders' => function ($query) {
-            $query->where('order_status_id', config('app.confirmed'));
+            $query->where('order_status_id', config('app.processing'));
         }])->where('id', $id)->first();
     }
 }

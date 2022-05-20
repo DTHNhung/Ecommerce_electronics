@@ -37,16 +37,37 @@
                                         {{ $order->code }}</p>
                                 </td>
                                 <td>
-                                    @if ($order->orderStatus->id === 2)
-                                        <span class="text-warning stt">
-                                            {{ __('messages.unconfirmed') }}</span>
-                                    @elseif($order->orderStatus->id === 1)
-                                        <span class="text-success stt">
-                                            {{ __('messages.confirmed') }}</span>
-                                    @else
-                                        <span class="text-danger stt">
-                                            {{ __('messages.canceled') }}</span>
-                                    @endif
+                                    @switch($order->orderStatus->id)
+                                        @case(1)
+                                            <span class="text-warning p-2 text-xs bg-orange-300">
+                                                {{ __('messages.waiting') }}
+                                            </span>
+                                        @break
+
+                                        @case(2)
+                                            <span class=" text-purple-700 p-2 text-xs bg-purple-300">
+                                                {{ __('messages.processing') }}
+                                            </span>
+                                        @break
+                                        
+                                        @case(3)
+                                        <span class=" text-blue-700 p-2 text-xs bg-blue-300">
+                                            {{ __('messages.shipped') }}
+                                        </span>
+                                        @break
+
+                                        @case(4)
+                                            <span class="text-success p-2 text-xs bg-green-300">
+                                                {{ __('messages.delivered') }}
+                                            </span>
+                                        @break
+
+                                        @case(5)
+                                            <span class="text-danger p-2 text-xs bg-red-300">
+                                                {{ __('messages.canceled') }}
+                                            </span>
+                                        @break
+                                    @endswitch
                                 </td>
                                 <td>
                                     <a href="{{ route('viewCancelOrder', ['id' => $order->id]) }}"

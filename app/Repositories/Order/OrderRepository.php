@@ -82,7 +82,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         return $this->model->with('user')
             ->whereBetween('updated_at', [$fromDate, $toDate])
-            ->where('order_status_id', config('app.confirmed'))
+            ->where('order_status_id', config('app.processing'))
             ->get();
     }
 

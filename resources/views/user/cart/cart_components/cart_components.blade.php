@@ -11,10 +11,10 @@
                     <p class="text-gray-600 text-center mr-8">
                         {{ __('titles.product') }}
                     </p>
-                    <p class="text-gray-600 text-center ml-80 mr-16 xl:mr-24">
+                    <p class="text-gray-600 text-center ml-80 pl-8 mr-16 xl:mr-24">
                         {{ __('titles.quantity') }}
                     </p>
-                    <p class="text-gray-600 text-center">
+                    <p class="text-gray-600 text-center ml-2">
                         {{ __('titles.Total') }}
                     </p>
 
@@ -31,10 +31,10 @@
                         $total += $cartItem['quantity'] * $cartItem['price'];
                     @endphp
                     <div
-                        class="shadow-md flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
+                        class=" bg-white shadow-md flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
                         <!-- cart image -->
                         <div class="w-32 flex-shrink-0 style-image">
-                            <a href="{{ route('show', $id) }}">
+                            <a href="{{ route('show', $cartItem['slug']) }}">
                                 <img src="{{ asset('images/uploads/products/' . $cartItem['image_thumbnail']) }}"
                                     class="style-image w-full style-image">
                             </a>
@@ -44,7 +44,7 @@
                         <div class="md:w-1/4 w-full">
                             <h2
                                 class="text-gray-800 mb-3 xl:text-xl textl-lg font-medium uppercase">
-                                <a href="{{ route('show', $id) }}">
+                                <a href="{{ route('show', $id) }}" class="text-gray-600 font-mono font-semibold uppercase">
                                     {{ $cartItem['name'] }}
                                 </a>
                             </h2>
@@ -70,21 +70,20 @@
                                 class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">+</button>
                         </div>
                         <!-- cart quantity end -->
-                        <div class="ml-auto md:ml-0">
+                        <div class="ml-auto md:ml-0 mr-20">
                             <p class="text-indigo-900 text-lg font-semibold">
                                 {{ vndFormat($cartItem['quantity'] * $cartItem['price']) }}
                             </p>
                         </div>
                         <div
-                            class="text-gray-600 hover:text-indigo-900 cursor-pointer">
+                            class="text-gray-600 mr-5">
                             <a href="#" data-id="{{ $id }}"
-                                class="cart_update bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                {{ __('titles.update') }}
+                                class=" text-lg cart_update mr-3 hover:text-indigo-900 cursor-pointer">
+                                <i class="fa-regular fa-pen-to-square"></i>
                             </a>
                             <a href="#" data-id="{{ $id }}"
-                                class="bg-indigo-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cart_delete">
-                                {{ __('titles.delete') }}
-
+                                class="text-lg cart_delete hover:text-indigo-900 cursor-pointer">
+                                <i class="fa-solid fa-trash"></i>
                             </a>
                         </div>
                     </div>

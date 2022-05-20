@@ -377,3 +377,70 @@ a.notification:hover {
 .read-color {
     background-color: blue;
 }
+
+.stt-waiting {
+    background-color: rgb(252, 243, 237);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.stt-processing {
+    background-color: rgb(175, 228, 252);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.stt-primary {
+    background-color: rgb(139, 196, 250);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.stt-success {
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    background-color: rgb(208, 226, 200);
+}
+
+.stt-danger {
+    background-color: rgb(252, 175, 175);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.text-gray {
+    color: #98a6ad;
+}
+
+.table > thead > tr > th {
+    color: #343a40;
+}
+
+h5.title-order {
+    text-transform: uppercase;
+    color: #7c8a9b;
+    margin-bottom: 20px;
+}
+
+.row {
+    margin: 10px 10px;
+}
+
+.delivery {
+    text-align: center;
+}
+
+.span-title {
+    font-weight: bold;
+    color: #768392;
+}
+
+div.text-content-info {
+    color: #7c8a9b;
+    font-size: 14px;
+}

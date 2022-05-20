@@ -244,4 +244,12 @@ return [
     'also-like' => 'you may also like',
     'order_id' => 'Order ID',
     'total' => 'Total',
+    'action' => 'Action',
+    'order-details' => 'Order Details',
+    'items-from-order' => 'Items from Order',
+    'order-summary' => 'Order Summary',
+    'item' => 'Item',
+    'shipping-info' => 'Shipping Information',
+    'bing-info' => 'Billing Information',
+    'delivery-info' => 'Delivery information',
 ];

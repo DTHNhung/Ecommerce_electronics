@@ -245,4 +245,12 @@ return [
     'also-like' => 'co the ban cung thich',
     'order_id' => 'Mã đơn hàng',
     'total' => 'Tổng giá trị',
+    'action' => 'Hoạt động',
+    'order-details' => 'Chi tiết đơn hàng',
+    'items-from-order' => 'Sản phẩm trong đơn hàng',
+    'order-summary' => 'Gía trị đơn hàng',
+    'item' => 'Sản phẩm',
+    'shipping-info' => 'Thông tin giao hàng',
+    'bing-info' => 'Thông tin thanh toán',
+    'delivery-info' => 'Thông tin giao hàng',
 ];

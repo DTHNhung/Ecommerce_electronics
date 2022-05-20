@@ -11,6 +11,77 @@
             {{ __('titles.order') }}: <span
                 class="uppercase">{{ $order->code }} </span>
         </h3>
+        <div class="px-6 mb-10">
+            <table class="min-w-full divide-y divide-gray-200">
+                <tbody>
+                    <tr>
+                        <td class="pl-12 py-2 w-3/4">{{ __('titles.name') }}:</td>
+                        <th class=" text-left">{{ $order->shipping->name }}</th>
+                    </tr>
+                    <tr>
+                        <td class="pl-12 py-2 w-3/4">{{ __('titles.email') }}:</td>
+                        <th class=" text-left">{{ $order->shipping->email }}</th>
+                    </tr>
+                    <tr>
+                        <td class="pl-12 py-2 w-3/4">{{ __('titles.phone') }}:</td>
+                        <th class=" text-left">{{ $order->shipping->phone }}</th>
+                    </tr>
+                    <tr>
+                        <td class="pl-12 py-2 w-3/4">{{ __('titles.Shipping Address') }}:</td>
+                        <th class=" text-left">{{ $order->shipping->address }}</th>
+                    </tr>
+                    <tr>
+                        <td class="pl-12 py-2 w-3/4">{{ __('titles.order_date') }}:</td>
+                        <th class=" text-left">{{ formatDate($order->created_at) }}</th>
+                    </tr>
+                    <tr>
+                        <td class="pl-12 py-2 w-3/4">{{ __('titles.status') }}:</td>
+                        <th class=" text-left">
+                            @switch($order->orderStatus->id)
+                                @case(1)
+                                    {{ ucfirst(__('messages.waiting')) }}
+                                @break
+            
+                                @case(2)
+                                    {{ ucfirst(__('messages.processing')) }}
+                                @break
+                                
+                                @case(3)
+                                    {{ ucfirst(__('messages.shipped')) }}
+                                @break
+            
+                                @case(4)
+                                    {{ ucfirst(__('messages.delivered')) }}
+                                @break
+            
+                                @case(5)
+                                    {{ ucfirst(__('messages.canceled')) }}
+                                @break
+                            @endswitch
+                    </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {{-- <div class="px-6 py-4 whitespace-nowrap">
+            <div class="text-lg py-2 text-gray-900">
+                {{ __('titles.name') }}:
+                <span class="font-semibold">{{ $order->shipping->name }}</span>
+            </div>
+            <div class="text-lg py-2 text-gray-900">
+                {{ __('titles.email') }}:
+                <span class="font-semibold">{{ $order->shipping->email }}</span>
+            </div>
+            <div class="text-lg py-2 text-gray-900">
+                {{ __('titles.phone') }}:
+                <span class="font-semibold">{{ $order->shipping->phone }}</span>
+            </div>
+            <div class="text-lg py-2 text-gray-900">
+                {{ __('titles.Shipping Address') }}:
+                <span
+                    class="font-semibold">{{ $order->shipping->address }}</span>
+            </div>
+        </div>
         <div class="px-6 py-4 whitespace-nowrap">
             <div class="text-lg py-2 text-gray-900">
                 {{ __('titles.order_date') }}:
@@ -27,17 +98,31 @@
             <div class="text-lg py-2 text-gray-900">
                 {{ __('titles.status') }}:
                 <span class="font-semibold">
-                    @if ($order->orderStatus->id === config('app.unconfirmed'))
-                        {{ __('messages.unconfirmed') }}
-                    @elseif($order->orderStatus->id === config('app.confirmed'))
-                        {{ __('messages.confirmed') }}
-                    @else
-                        {{ __('messages.canceled') }}
-                    @endif
+                    @switch($order->orderStatus->id)
+                    @case(1)
+                        {{ ucfirst(__('messages.waiting')) }}
+                    @break
+
+                    @case(2)
+                        {{ ucfirst(__('messages.processing')) }}
+                    @break
+                    
+                    @case(3)
+                        {{ ucfirst(__('messages.shipped')) }}
+                    @break
+
+                    @case(4)
+                        {{ ucfirst(__('messages.delivered')) }}
+                    @break
+
+                    @case(5)
+                        {{ ucfirst(__('messages.canceled')) }}
+                    @break
+                @endswitch
                 </span>
             </div>
-        </div>
-        <div class="flex flex-col">
+        </div> --}}
+        <div class="flex flex-col px-6">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
                     class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -216,29 +301,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-        <h3
-            class="text-2xl font-medium mt-32 mx-2 pt-1 pb-4  uppercase text-center">
-            {{ __('titles.info-delivery') }}
-        </h3>
-        <div class="px-6 py-4 whitespace-nowrap">
-            <div class="text-lg py-2 text-gray-900">
-                {{ __('titles.name') }}:
-                <span class="font-semibold">{{ $order->shipping->name }}</span>
-            </div>
-            <div class="text-lg py-2 text-gray-900">
-                {{ __('titles.email') }}:
-                <span class="font-semibold">{{ $order->shipping->email }}</span>
-            </div>
-            <div class="text-lg py-2 text-gray-900">
-                {{ __('titles.phone') }}:
-                <span class="font-semibold">{{ $order->shipping->phone }}</span>
-            </div>
-            <div class="text-lg py-2 text-gray-900">
-                {{ __('titles.Shipping Address') }}:
-                <span
-                    class="font-semibold">{{ $order->shipping->address }}</span>
             </div>
         </div>
     </div>
