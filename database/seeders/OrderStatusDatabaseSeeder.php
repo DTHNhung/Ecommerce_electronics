@@ -16,8 +16,10 @@ class OrderStatusDatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('order_status')->insert([
-            ['name' => 'confirmed', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
-            ['name' => 'unconfirmed', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
+            ['name' => 'waiting', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
+            ['name' => 'processing', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
+            ['name' => 'shipped', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
+            ['name' => 'delivered', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
             ['name' => 'canceled', 'created_at' => new DateTime(), 'updated_at' => new DateTime()],
         ]);
     }

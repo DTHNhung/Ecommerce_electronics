@@ -1,157 +1,127 @@
 @extends('admin.admin_layout')
 @section('admin_content')
-    <div class="table-agile-info">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{ __('titles.info-customer') }}
+    <h4 class="page-title">{{ __('titles.order-details') }}</h4>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <h5 class="title-order">
+                    {{ __('titles.shipping-info') }}
+                </h5>
+
+                <span class="span-title">{{ $order->shipping->name }}</span>
+                <br />
+                <div class="text-content-info">
+                    <p>
+                        <span class="span-title">{{ __('titles.address') }}</span>:
+                        {{ $order->shipping->address }}
+                    </p>
+                    <p>
+                        <span class="span-title">{{ __('titles.phone') }}</span>:
+                        {{ $order->shipping->phone }}
+                    </p>
+                </div>
             </div>
+        </div>
 
-            <div class="table-responsive">
-                <table class="table table-striped b-t b-light">
-                    <thead>
-                        <tr>
-                            <th> {{ __('titles.name') }}</th>
-                            <th>{{ __('titles.phone') }}</th>
-                            <th>{{ __('titles.email') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                            <td>{{ $order->user->name }}</td>
-                            <td>{{ $order->user->phone }}</td>
-                            <td>{{ $order->user->email }}</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <h5 class="title-order">
+                    {{ __('titles.bing-info') }}
+                </h5>
+                <div class="text-content-info">
+                    <p><span class="span-title">Payment Type</span>: Credit Card</p>
+                    <p><span class="span-title">Provider</span>: Visa ending in 2851</p>
+                    <p><span class="span-title">Valid Date</span>: 02/2020</p>
+                    <p><span class="span-title">CVV</span>: xxx</p>
+                </div>
             </div>
+        </div>
 
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <h5 class="title-order">
+                    {{ __('titles.delivery-info') }}
+                </h5>
+
+                <div class="delivery text-content-info">
+                    <i class="fa-solid fa-truck"></i>
+                    <p><span class="span-title">UPS Delivery</span></p>
+                    <p><span class="span-title">Order ID</span> : #{{ $order->code }}</p>
+                    <p><span class="span-title">Payment Mode</span> : COD</p>
+                </div>
+            </div>
         </div>
     </div>
-    <br>
-    <div class="table-agile-info">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{ __('titles.info-delivery') }}
-            </div>
-            <div class="table-responsive">
-                <table class="table table-striped b-t b-light">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <h5 class="title-order">
+                    {{ __('titles.items-from-order') . ' #' . $order->code }}
+                </h5>
+
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th> {{ __('titles.name') }}</th>
-                            <th>{{ __('titles.address') }}</th>
-                            <th>{{ __('titles.phone') }}</th>
-                            <th>{{ __('titles.email') }}</th>
-                            <th>{{ __('titles.note') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $order->shipping->name }}</td>
-                            <td>{{ $order->shipping->address }}</td>
-                            <td>{{ $order->shipping->phone }}</td>
-                            <td>{{ $order->shipping->email }}</td>
-                            <td>{{ $order->shipping->note }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-    <br><br>
-
-    <div class="table-agile-info">
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{ __('titles.list-order-details') }}
-            </div>
-            <div class="table-responsive">
-                <table class="table table-striped b-t b-light">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-
-                            <th>{{ __('titles.name-var', ['name' => __('titles.product')]) }}
-                            </th>
+                            <th>{{ __('titles.item') }}</th>
                             <th>{{ __('titles.quantity') }}</th>
                             <th>{{ __('titles.price') }}</th>
-                            <th>{{ __('titles.Subtotal') }}</th>
+                            <th>{{ __('titles.total') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($order->products as $key => $order_product)
+                        @foreach ($order->products as $product)
                             <tr>
-                                <th>
-                                    {{ $key + 1 }}
-                                </th>
-                                <th>
-                                    {{ $order_product->name }}
-                                </th>
-                                <th>
-                                    {{ $order_product->pivot->product_sales_quantity }}
-                                </th>
-                                <th>
-                                    {{ vndFormat($order_product->price) }}
-                                </th>
-                                <th>
-                                    {{ vndFormat($order_product->price * $order_product->pivot->product_sales_quantity) }}
-                                </th>
-                            </tr>
-                        @endforeach
-                        @if ($order->voucher != null)
-                            <tr>
-                                <td colspan="2">
-                                    {{ __('titles.Voucher') }}:
-                                    {{ $order->voucher->value }}%
+                                <td>{{ $product->name }}</td>
+                                <td>
+                                    {{ $product->pivot->product_sales_quantity }}
+                                </td>
+                                <td>
+                                    {{ vndFormat($product->price) }}
+                                </td>
+                                <td>
+                                    {{ vndFormat($product->pivot->product_sales_quantity * $product->price) }}
                                 </td>
                             </tr>
-                        @endif
-                        <tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                            <td colspan="2">
-                                {{ __('titles.Total') }}:
-                                {{ vndFormat($order->sum_price) }}
-                            </td>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <h5 class="title-order">
+                    {{ __('titles.order-summary') }}
+                </h5>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{{ __('titles.description') }}</th>
+                            <th>{{ __('titles.price') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ __('titles.Subtotal') }}</td>
+                            <td>{{ vndFormat($order->sum_price) }}</td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                {{ __('titles.code') }}:
-                                {{ $order->code }}
-                            </td>
+                            <td>{{ __('titles.Delivery') }}</td>
+                            <td>{{ __('titles.Free') }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ __('titles.discount') }}</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>{{ __('titles.total') }}</th>
+                            <th>{{ vndFormat($order->sum_price) }}</th>
                         </tr>
                     </tbody>
                 </table>
-                <p class="mt-12">{{ __('titles.change-status-order') }}
-                </p>
-                <form class="mt-12" role="form"
-                    action="{{ route('orders.update', ['order' => $order->id]) }}"
-                    method="POST">
-                    {{ csrf_field() }}
-                    @method('PUT')
-                    <select name="order_status_id"
-                        class="form-control input-sm m-bot15">
-                        @foreach ($order_status as $key => $status)
-                            @if ($status->id == $order->order_status_id)
-                                <option selected value="{{ $status->id }}">
-                                    {{ $status->name }}
-                                </option>
-                            @else
-                                <option value="{{ $status->id }}">
-                                    {{ $status->name }}
-                                </option>
-                            @endif
-                        @endforeach
-                    </select>
-                    <button type="submit" name="add_product"
-                        class="btn btn-info mt-24">
-                        {{ __('titles.update') }}
-                    </button>
-                </form>
             </div>
         </div>
     </div>

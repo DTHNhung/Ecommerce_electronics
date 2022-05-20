@@ -30,8 +30,7 @@
                 Session::put('mess', null);
             @endphp
         @endif
-        <div
-            class="lg:col-span-5 border border-gray-200 px-6 py-8 rounded mt-6 lg:mt-0 shadow-2xl">
+        <div class="bg-white lg:col-span-5 border border-gray-200 px-6 py-8 rounded mt-6 lg:mt-0 shadow-2xl">
             <h4 class="text-gray-800 text-lg mb-6 font-medium uppercase">
                 ORDER SUMMARY
             </h4>
@@ -109,8 +108,7 @@
             </a>
             <!-- checkout end -->
         </div>
-        <div
-            class="lg:col-span-6 border border-gray-200 px-6 py-8 rounded shadow-2xl">
+        <div class="bg-white lg:col-span-6 border border-gray-200 px-6 py-8 rounded shadow-2xl">
             <form role="form" action="{{ route('orders.store') }}" method="post"
                 id="form-checkout">
                 @csrf

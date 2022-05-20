@@ -50,6 +50,7 @@ class CartController extends Controller
         } else {
             $data['carts'][$id] = [
                 'name' => $product->name,
+                'slug' => $product->slug,
                 'price' => $product->price,
                 'total_product' => $product->quantity,
                 'quantity' => 1,
@@ -130,6 +131,7 @@ class CartController extends Controller
                 $data['carts'][$id] = [
                     'name' => $product->name,
                     'price' => $product->price,
+                    'slug' => $product->slug,
                     'total_product' => $product->quantity,
                     'quantity' => $request->quantity,
                     'image_thumbnail' => $product->image_thumbnail,

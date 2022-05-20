@@ -29,8 +29,10 @@ return [
     'order-complete' => 'Thank you for your order! Your order is being processed and will be
     completed within 3-6 hours. You will
     receive an email confirmation when your order is completed.',
-    'unconfirmed' => 'Unconfirmed',
-    'confirmed' => 'Confirmed',
+    'waiting' => 'Waiting',
+    'processing' => 'processing',
+    'shipped' => 'shipped',
+    'delivered' => 'delivered',
     'canceled' => 'Cancel',
     'your-order' => 'Your order information',
     'something-wrong' => 'Something went wrong!',
