@@ -1742,8 +1742,16 @@ input[type=number] {
   background-image: url(../images/bg-home.jpg);
 }
 
+.bg-head-2 {
+  background-image: url(../images/banner.png);
+}
+
 .w-80 {
   width: 80%;
+}
+
+.w-200 {
+  height: 500px;
 }
 
 .visually-hidden {

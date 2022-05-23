@@ -297,8 +297,6 @@
     <!-- review comment and rating end-->
     <!-- product details and review end -->
 
-    <div>
-
     <div id="also_like" class="uppercase text-xl text-gray-600 pt-5 container pb-5 mx-auto">
         <h3>
             {{ __('titles.also-like') }}

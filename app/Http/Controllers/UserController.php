@@ -7,6 +7,7 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Gender\GenderRepositoryInterface;
+use PDF;
 
 class UserController extends Controller
 {
@@ -102,5 +103,15 @@ class UserController extends Controller
         $orders = $this->orderRepo->getOrderWithUserIdAndStatusOrder($idUser, $isSatus);
 
         return view('user.profile.order.orders')->with(compact('orders'));
+    }
+
+    public function generatePDF ()
+    {
+        $order = $this->orderRepo->find(request()->id);
+        $data_export = date('m/d/Y');
+
+        $pdf = PDF::loadView('user.profile.order.pdf', compact('data_export', 'order'));
+        
+        return $pdf->download('order_detail.pdf');
     }
 }

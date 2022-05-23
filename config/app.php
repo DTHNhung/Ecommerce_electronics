@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,15 +234,14 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'PDF' => \Barryvdh\DomPDF\Facade::class,
     ],
     'limit' => 9,
     'limit_search' => 5,
     'limit_top_new' => 4,
     'limitRandomString' => 6,
-    'startOrderStatus' => 1,
-    'waiting' => 1,
-    'processing' => 2,
-    'shipped' => 3,
-    'delivered' => 4,
-    'canceled' => 5,
+    'startOrderStatus' => 2,
+    'confirmed' => 1,
+    'unconfirmed' => 2,
+    'canceled' => 3,
 ];

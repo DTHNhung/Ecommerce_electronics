@@ -15,6 +15,10 @@
         </style>
 
         <style>
+            html {
+                scroll-behavior: smooth;
+            }
+            
             body {
                 font-family: 'Nunito', sans-serif;
             }

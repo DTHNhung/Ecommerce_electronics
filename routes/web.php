@@ -107,4 +107,5 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'user']], function
     Route::get('/view-order/{id}', [UserController::class, 'viewDetailOrder'])->name('viewDetailOrder');
     Route::get('/view-status-order/{idUser}/{idStatus}', [UserController::class, 'viewStatusOrder'])
         ->name('viewStatusOrder');
+    Route::get('/view-order/{id}/export-order', [UserController::class, 'generatePDF'])->name('export-pdf');
 });
