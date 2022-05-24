@@ -252,4 +252,10 @@ return [
     'shipping-info' => 'Shipping Information',
     'bing-info' => 'Billing Information',
     'delivery-info' => 'Delivery information',
+    'change-status' => 'Change order status',
+    'waiting' => 'Waiting',
+    'processing' => 'Processing',
+    'shipped' => 'Shipped',
+    'delivered' => 'Delivered',
+    'canceled' => 'Canceled',
 ];

@@ -198,7 +198,7 @@
             <div class="row mt-5">
                 <div class="text-black antialiased flex">
                     @if ($comment->user->avatar != null)
-                        <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('avatars/' . $user->avatar ) }}" alt="">
+                        <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('avatars/' . $comment->user->avatar ) }}" alt="">
                     @else
                         <img class="rounded-full h-15 w-15 mx-4" src="{{ asset('images/user.png') }}" alt="">
                     @endif

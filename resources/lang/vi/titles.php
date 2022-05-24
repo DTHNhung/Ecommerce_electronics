@@ -253,4 +253,10 @@ return [
     'shipping-info' => 'Thông tin giao hàng',
     'bing-info' => 'Thông tin thanh toán',
     'delivery-info' => 'Thông tin giao hàng',
+    'change-status' => 'Thay đổi trạng thái đơn hàng',
+    'waiting' => 'Chưa xác nhận',
+    'processing' => 'Đang xử lý',
+    'shipped' => 'Đang giao hàng',
+    'delivered' => 'Đã giao',
+    'canceled' => 'Đã hủy',
 ];
