@@ -1,5 +1,10 @@
 @extends('admin.admin_layout')
 @section('admin_content')
+
+<!-- Edit Order Modal -->
+@include("admin.order.edit")
+<!-- End Edit Order Modal -->
+
 <h4 class="page-title">{{ __('titles.order') }}</h4>
 <div class="panel panel-default">
     <div class="row">
@@ -75,11 +80,18 @@
                                 @endswitch
                             </td>
                             <td>
-                                <a href="{{ route('orders.edit', ['order' => $order->id]) }}"
+                                @if ($order->order_status_id != config('app.canceled') 
+                                    && $order->order_status_id != config('app.delivered'))
+                                    <a href="#" id="editA" data-id="{{ $order->id }}">
+                                        <i class="fas fa-edit text-gray"></i>
+                                    </a>
+                                @endif
+                                <a href="{{ route('orders.show', ['order' => $order->id]) }}"
                                     class="active styling-edit"
                                     ui-toggle-class="">
-                                    <i class="fas fa-edit text-gray"></i>
+                                    <i class="fa-solid fa-eye"></i>
                                 </a>
+                                
                             </td>
                         </tr>
                     @endforeach

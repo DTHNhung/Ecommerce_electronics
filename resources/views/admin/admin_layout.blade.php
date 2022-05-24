@@ -230,6 +230,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/voucher.js') }}"></script>
+    <script src="{{ asset('js/order.js') }}"></script>
     <script type="text/javascript"
         src="{{ asset('bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}">
     </script>

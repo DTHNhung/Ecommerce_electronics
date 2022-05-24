@@ -77,9 +77,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::resource('/brands', BrandController::class);
     Route::delete('/deleteimage/{id}', [ProductController::class, 'deleteimage'])->name('deleteimage');
     Route::resource('/products', ProductController::class);
-    Route::get('/all-cancel-order', [OrderController::class, 'allCancelOrder'])->name('allCancelOrder');
-    Route::get('/view-cancel-order/{id}', [OrderController::class, 'viewCancelOrder'])->name('viewCancelOrder');
-    Route::resource('orders', OrderController::class)->only(['index', 'show', 'edit', 'update']);
+    Route::post('/orders/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::patch('/orders/update', [OrderController::class, 'update'])->name('orders.update');
+    Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::get('/statistic-by-order', [StatisticController::class, 'statisticByOrder'])->name('statistic.order');
     Route::get('/statistic-by-revenue', [StatisticController::class, 'statisticByRevenue'])->name('statistic.revenue');
     Route::post('/select-month-order', [StatisticController::class, 'selectMonthOrder'])

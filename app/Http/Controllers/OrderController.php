@@ -2,17 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\Voucher;
-use App\Models\Shipping;
-use App\Models\Statistic;
-use App\Models\OrderStatus;
 use Illuminate\Support\Str;
-use App\Models\OrderProduct;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Notifications\UpdateOrderStatus;
 use App\Http\Requests\Order\StoreRequest;
@@ -60,9 +51,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orderRepo->getAll();
+        $order_status = $this->orderStatusRepo->getAll();
 
-        return view('admin.order.all_order', [
+        return view('admin.order.index', [
             'orders' => $orders,
+            'order_status' => $order_status,
         ]);
     }
 
@@ -144,7 +137,11 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = $this->orderRepo->find($id);
+        $order_status = $this->orderStatusRepo->getAll();
+
+        return view('admin.order.show')
+            ->with(compact('order', 'order_status'));
     }
 
     /**
@@ -153,11 +150,38 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $order = $this->orderRepo->find($id);
+        $order = $this->orderRepo->find($request->order_id);
         $order_status = $this->orderStatusRepo->getAll();
-        return view('admin.order.view_order')->with(compact('order', 'order_status'));
+
+        foreach ($order_status as $s) {
+            if ($s->id == $order->order_status_id) {
+                $status_01 =[
+                    'id' => $s->id,
+                    'name' => $s->name
+                ];
+            }
+            if ($s->id == $order->order_status_id + 1) {
+                $status_02 =[
+                    'id' => $s->id,
+                    'name' => $s->name
+                ];
+            }
+        }
+
+        if ($order) {
+            return response()->json([
+                'code' => 200,
+                'order' => $order,
+                'status_01' => $status_01,
+                'status_02' => $status_02,
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => __('messages.No Results Found'),
+        ]);
     }
 
     /**
@@ -167,9 +191,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $order = $this->orderRepo->find($id);
+        $order = $this->orderRepo->find($request->order_id);
         $order_status_id = $request->order_status_id;
 
         if ($order->order_status_id != $order_status_id) {
@@ -188,8 +212,10 @@ class OrderController extends Controller
             $this->userRepo->sendNotify($order->user_id, $eventNotify);
         }
 
-        return redirect()->route('orders.index')
-            ->with('mess', __('messages.update-success', ['name' => __('titles.order')]));
+        return response()->json([
+            'code' => 200,
+            'mess' => __('messages.update-success', ['name' => __('titles.order')]),
+        ], 200);
     }
 
     public function infoCheckout()
@@ -211,20 +237,5 @@ class OrderController extends Controller
             'discount' => $discount,
             'percent' => $percent,
         ]);
-    }
-
-    public function allCancelOrder()
-    {
-        $orders = $this->orderRepo->getOrderInStatusCancel();
-
-        return view('admin.order.all_cancel_order')->with(compact('orders'));
-    }
-
-    public function viewCancelOrder($id)
-    {
-        $order = $this->orderRepo->find($id);
-        $order_status = $this->orderStatusRepo->getAll();
-
-        return view('admin.order.view_cancel_order')->with(compact('order'));
     }
 }

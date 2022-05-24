@@ -444,3 +444,7 @@ div.text-content-info {
     color: #7c8a9b;
     font-size: 14px;
 }
+
+.modal-title {
+    text-transform: uppercase;
+}
