@@ -165,9 +165,13 @@
                <h2>No Product Found.!</h2>
                @endif
             </div>
+            <br>
+                {{ $products->links() }}
+
             <!-- product wrapper end -->
         </div>
         <!-- products end -->
+
     </div>
     <!-- shop wrapper end -->
 @endsection

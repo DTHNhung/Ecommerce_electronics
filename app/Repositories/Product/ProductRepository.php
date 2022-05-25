@@ -83,7 +83,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getProduct()
     {
-        return $this->model->select('*')->with('brand', 'category')->orderby('created_at', 'DESC')->get();
+        return $this->model->select('*')->with('brand', 'category')->orderby('created_at', 'DESC')->paginate(9);
     }
 
     public function createProduct(array $attributes, array $categoryIds)

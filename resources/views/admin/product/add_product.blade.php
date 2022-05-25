@@ -64,7 +64,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">
                                     {{ __('titles.description') }}</label>
-                                <textarea type="text" name="description" class="form-control">
+                                <textarea type="text" name="description" class="form-control" id="desc_product_ckeditor">
                                     {{ old('description') }}
                                     </textarea>
                                 @error('description')

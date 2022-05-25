@@ -214,7 +214,7 @@ class OrderController extends Controller
 
         return response()->json([
             'code' => 200,
-            'mess' => __('messages.update-success', ['name' => __('titles.order')]),
+            'message' => __('messages.update-success', ['name' => __('titles.order')]),
         ], 200);
     }
 
