@@ -9,7 +9,7 @@
                 {{ __('titles.order') }}
             </h3>
         </div>
-    
+        
         @foreach ($orders as $order)
         <div class="shadow-2xl rounded px-6 pt-5 pb-7 mt-6 bg-white">
             <div class="text-black flex items-center justify-end flex-grow border border-l-0 border-t-0 border-r-0 pb-3">
@@ -67,12 +67,14 @@
                 @endforeach
                 <div class="row">
                     <div class="col-sm-5 text-center">
+                    <a href="{{ route('export-pdf', $order->id) }}" class="p-2 rounded-full flex float-left justify-center cursor-pointer bg-blue-500 hover:bg-blue-400">Export PDF</a>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
                         <h1 class="uppercase tracking-wide text-lg text-indigo-900 font-semibold mt-3">
                             {{ __('titles.Total') }}:
                             {{ vndFormat($order->sum_price) }}</h1>
                     </div>
+
                 </div>
             </div>
         </div>
