@@ -166,7 +166,9 @@
                @endif
             </div>
             <br>
+            @if (count(array($product)) >= 9)
                 {{ $products->links() }}
+            @endif
 
             <!-- product wrapper end -->
         </div>
